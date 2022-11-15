@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsOptional,
   Matches,
+  IsAlpha
 } from 'class-validator';
 import { Field, InputType } from '@nestjs/graphql';
 
@@ -23,11 +24,13 @@ export class RegisterDto {
   @IsString()
   @Field()
   @IsOptional()
+  @IsAlpha()
   firstName: string;
 
   @IsString()
   @Field()
   @IsOptional()
+  @IsAlpha()
   lastName: string;
 }
 
