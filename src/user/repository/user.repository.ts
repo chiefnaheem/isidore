@@ -6,8 +6,8 @@ import { UserEntity } from '../schema/user.entity';
 import { UserDocument } from '../schema/user.schema';
 
 @Injectable()
-export class UsersRepository extends AbstractRepository<UserDocument> {
-  protected readonly logger = new Logger(UsersRepository.name);
+export class UserRepository extends AbstractRepository<UserDocument> {
+  protected readonly logger = new Logger(UserRepository.name);
 
   constructor(@InjectModel(UserEntity.name) userModel: Model<UserDocument>) {
     super(userModel);

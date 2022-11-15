@@ -1,29 +1,44 @@
-import { IsString, IsEmail, IsNotEmpty, IsOptional, Matches } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  Matches,
+} from 'class-validator';
+import { Field, InputType } from '@nestjs/graphql';
 
+@InputType()
 export class RegisterDto {
-    @IsString()
-    @IsEmail()
-    email: string;
+  @Field()
+  @IsEmail()
+  email: string;
 
-    @IsString()
-    Matches()
-    password: string
+  @IsString()
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/, {
+    message: 'Password too weak',
+  })
+  @Field()
+  password: string;
 
-    @IsString()
-    @IsOptional()
-    firstName: string
+  @IsString()
+  @Field()
+  @IsOptional()
+  firstName: string;
 
-    @IsString()
-    @IsOptional()
-    lastName: string
+  @IsString()
+  @Field()
+  @IsOptional()
+  lastName: string;
 }
 
+@InputType()
 export class LoginDto {
-    @IsString
-    @IsEmail()
-    email: string
+  @IsEmail()
+  @Field()
+  email: string;
 
-    @IsString()
-    @IsNotEmpty()
-    password: string;
+  @IsString()
+  @Field()
+  @IsNotEmpty()
+  password: string;
 }
