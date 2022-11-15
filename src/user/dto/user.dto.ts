@@ -4,7 +4,7 @@ import {
   IsNotEmpty,
   IsOptional,
   Matches,
-  IsAlpha
+  IsAlpha,
 } from 'class-validator';
 import { Field, InputType } from '@nestjs/graphql';
 

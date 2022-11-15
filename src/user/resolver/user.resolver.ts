@@ -10,8 +10,12 @@ import { UserService } from '../service/user.service';
 export class UserResolver {
   constructor(private readonly usersService: UserService) {}
 
+  //login mutation resolver
+
+  @Mutation(() => any)
+
   @Mutation(() => UserEntity)
-  async createUser(@Args('createUserData') body: RegisterDto) {
+  async createUser(@Args('register') body: RegisterDto) {
     return this.usersService.createUser(body);
   }
 
