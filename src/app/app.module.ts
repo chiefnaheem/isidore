@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './controller/app.controller';
 import { AppService } from './service/app.service';
-import { envConfig } from '../config/constant/env.configuration';
 import { configValidation } from '../config/validator/config.validator';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
