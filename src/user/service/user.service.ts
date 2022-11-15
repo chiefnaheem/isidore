@@ -37,10 +37,11 @@ export class UserService {
     }
   }
 
-  //we want user to be able to log in with email and password after validating the user
-  async login(body: LoginDto, response: Response) {
+  //we want user to be able to log in with email and password after validating the user and generate access token
+
+  async login(body: LoginDto) {
     const user = await this.validateUser(body.email, body.password);
-    return this.authService.login(user, response);
+    return this.authService.accessToken(user._id, user.email);
   }
 
   async getUser(currentUser: GetCurrentUser) {

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
-import { UserEntity } from '../../user/schema/user.entity';
+// import { UserEntity } from '../../user/schema/user.entity';
 
 export interface TokenPayload {
   userId: string;
@@ -33,11 +33,11 @@ export class AuthService {
   //   });
   // }
   async accessToken(
-    userId: number,
+    userId: string,
     email: string,
   ): Promise<{ access_token: string }> {
-    const secret = this.config.get('JWT_SECRET');
-    const token = await this.jwt.signAsync(
+    const secret = this.configService.get('JWT_SECRET');
+    const token = await this.jwtService.signAsync(
       {
         sub: userId,
         email,

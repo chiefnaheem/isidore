@@ -10,26 +10,26 @@ import { LocalAuthGuard } from '../guards/local.auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  async login(
-    @CurrentUser() user: UserEntity,
-    @Res({ passthrough: true }) response: Response,
-  ) {
-    await this.authService.login(user, response);
-    response.send(user);
-  }
+  // @UseGuards(LocalAuthGuard)
+  // @Post('login')
+  // async login(
+  //   @CurrentUser() user: UserEntity,
+  //   @Res({ passthrough: true }) response: Response,
+  // ) {
+  //   await this.authService.login(user, response);
+  //   response.send(user);
+  // }
 
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  isAuthenticated() {
-    return true;
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Get()
+  // isAuthenticated() {
+  //   return true;
+  // }
 
-  @Post('logout')
-  @UseGuards(JwtAuthGuard)
-  logout(@Res({ passthrough: true }) response: Response) {
-    this.authService.logout(response);
-    response.json({});
-  }
+  // @Post('logout')
+  // @UseGuards(JwtAuthGuard)
+  // logout(@Res({ passthrough: true }) response: Response) {
+  //   this.authService.logout(response);
+  //   response.json({});
+  // }
 }

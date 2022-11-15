@@ -4,6 +4,8 @@ import { AppService } from './service/app.service';
 import { configValidation } from '../config/validator/config.validator';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { DatabaseModule } from 'src/database/database.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
