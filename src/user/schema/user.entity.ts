@@ -1,8 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { AbstractModel } from '../../common/abstract.model';
+import { AbstractEntity } from '../../database/schema/database.entity';
 
 @ObjectType()
-export class User extends AbstractEntity {
+export class UserEntity extends AbstractEntity {
   @Field()
   readonly email: string;
 }
