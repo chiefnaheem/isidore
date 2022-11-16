@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
 import { Document, Types } from 'mongoose';
 import { UserEntity } from 'src/user/schema/user.entity';
 import { mongooseSchemaConfig } from 'src/utils/schema.config';
