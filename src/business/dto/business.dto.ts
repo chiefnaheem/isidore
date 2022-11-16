@@ -23,7 +23,7 @@ export class CreateBusinessDto {
   @IsString()
   @IsNotEmpty()
   @Field()
-  owner?: string;
+  owner: string;
 }
 
 @InputType()

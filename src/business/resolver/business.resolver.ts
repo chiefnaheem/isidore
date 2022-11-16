@@ -2,55 +2,54 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Types } from 'mongoose';
 import { GqlAuthGuard } from 'src/auth/guards/gql.auth.guard';
+import JwtAuthGuard from 'src/auth/guards/jwt.auth.guard';
 import { GetCurrentUser } from 'src/user/dto/getUser.dto';
 import { UpdateBusinessDto, CreateBusinessDto } from '../dto/business.dto';
 import { BusinessEntity } from '../schema/business.schema';
 import { BusinessService } from '../service/business.service';
 
 @Resolver(() => BusinessEntity)
+// @UseGuards(JwtAuthGuard)
 export class BusinessResolver {
   constructor(private readonly businessService: BusinessService) {}
 
-  @UseGuards(GqlAuthGuard)
+//   @UseGuards(GqlAuthGuard)
   @Mutation(() => BusinessEntity)
   async createBusiness(
     @Args('createBusiness') body: CreateBusinessDto,
-    @Args() getCurrentUser: GetCurrentUser,
+   
   ) {
-    return this.businessService.createBusiness(body, getCurrentUser);
+    return this.businessService.createBusiness(body);
   }
 
-    @UseGuards(GqlAuthGuard)
-    @Query(() => [BusinessEntity], { name: 'businesses' })
-    async getBusinesses(@Args() getCurrentUser: GetCurrentUser) {
-        return this.businessService.getBusinesses(getCurrentUser);
-        }
+   //get all businesses
 
-    @UseGuards(GqlAuthGuard)
+
+    // @UseGuards(GqlAuthGuard)
     @Query(() => BusinessEntity, { name: 'business' })
     async getBusiness(
         @Args('id') id: string,
-        @Args() getCurrentUser: GetCurrentUser,
+
     ) {
-        return this.businessService.getBusiness(id, getCurrentUser);
+        return this.businessService.getBusiness(id);
         }
 
-    @UseGuards(GqlAuthGuard)
+    // @UseGuards(GqlAuthGuard)
     @Mutation(() => BusinessEntity)
     async updateBusiness(
         @Args('id') id: string,
         @Args('updateBusiness') body: UpdateBusinessDto,
-        @Args() getCurrentUser: GetCurrentUser,
+       
     ) {
-        return this.businessService.updateBusiness(id, body, getCurrentUser);
+        return this.businessService.updateBusiness(id, body);
         }
 
-    @UseGuards(GqlAuthGuard)
+    // @UseGuards(GqlAuthGuard)
     @Mutation(() => BusinessEntity)
     async deleteBusiness(
         @Args('id') id: string,
-        @Args() getCurrentUser: GetCurrentUser,
+
     ) {
-        return this.businessService.deleteBusiness(id, getCurrentUser);
+        return this.businessService.deleteBusiness(id);
         }
 }

@@ -21,12 +21,11 @@ export class BusinessService {
 
   //we want to create business in which the owner will be the logged in user
 
-  async createBusiness(body: CreateBusinessDto, currentUser: GetCurrentUser) {
+  async createBusiness(body: CreateBusinessDto) {
     //we want to create business in which the owner will be the logged in user
     try {
       const business = new this.userModel({
         ...body,
-        owner: currentUser._id,
       });
       await business.save();
       return business;
@@ -36,11 +35,9 @@ export class BusinessService {
   }
 
   //we want to get all businesses in which the owner will be the logged in user
-  async getBusinesses(currentUser: GetCurrentUser) {
+  async getBusinesses() {
     try {
-      const businessDocument = await this.userModel.find({
-        owner: currentUser._id,
-      });
+      const businessDocument = await this.userModel.find();
       return businessDocument;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
@@ -48,12 +45,9 @@ export class BusinessService {
   }
 
   //we want to get a business in which the owner will be the logged in user
-  async getBusiness(id: string, currentUser: GetCurrentUser) {
+  async getBusiness(id: string) {
     try {
-      const businessDocument = await this.userModel.findOne({
-        _id: id,
-        owner: currentUser._id,
-      });
+      const businessDocument = await this.userModel.findById(id);
       return businessDocument;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
@@ -64,18 +58,16 @@ export class BusinessService {
   async updateBusiness(
     id: string,
     body: UpdateBusinessDto,
-    currentUser: GetCurrentUser,
   ) {
     try {
-      const businessDocument = await this.userModel.findOne({
-        _id: id,
-        owner: currentUser._id,
-      });
+      const businessDocument = await this.userModel.findByIdAndUpdate(
+         id,
+        body,
+        {new: true}
+      );
       if (!businessDocument) {
         throw new NotFoundException('Business not found');
       }
-      businessDocument.set(body);
-      await businessDocument.save();
       return businessDocument;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
@@ -83,12 +75,9 @@ export class BusinessService {
   }
 
   //we want to delete a business in which the owner will be the logged in user
-  async deleteBusiness(id: string, currentUser: GetCurrentUser) {
+  async deleteBusiness(id: string) {
     try {
-      const businessDocument = await this.userModel.findOne({
-        _id: id,
-        owner: currentUser._id,
-      });
+      const businessDocument = await this.userModel.findById(id);
       if (!businessDocument) {
         throw new NotFoundException('Business not found');
       }
