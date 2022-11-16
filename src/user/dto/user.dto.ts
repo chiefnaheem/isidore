@@ -3,7 +3,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsOptional,
-  Matches,
+  MinLength,
   IsAlpha,
 } from 'class-validator';
 import { Field, InputType } from '@nestjs/graphql';
@@ -15,9 +15,7 @@ export class RegisterDto {
   email: string;
 
   @IsString()
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/, {
-    message: 'Password too weak',
-  })
+  @MinLength(5)
   @Field()
   password: string;
 
@@ -25,13 +23,13 @@ export class RegisterDto {
   @Field()
   @IsOptional()
   @IsAlpha()
-  firstName: string;
+  firstName?: string;
 
   @IsString()
   @Field()
   @IsOptional()
   @IsAlpha()
-  lastName: string;
+  lastName?: string;
 }
 
 @InputType()

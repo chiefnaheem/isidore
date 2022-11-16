@@ -6,17 +6,22 @@ import { UserRepository } from './repository/user.repository';
 import { UserResolver } from './resolver/user.resolver';
 import { UserService } from './service/user.service';
 // import { AuthModule } from 'src/auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
+  // imports: [
+  //   JwtModule.register({}),
+  //   MongooseModule.forFeatureAsync([
+  //     {
+  //       name: UserEntity.name,
+  //       useFactory: () => {
+  //         return UserSchema;
+  //       },
+  //     },
+  //   ]),
+  // ],
   imports: [
-    MongooseModule.forFeatureAsync([
-      {
-        name: UserEntity.name,
-        useFactory: () => {
-          return UserSchema;
-        },
-      },
-    ]),
+    MongooseModule.forFeature([{ name: UserEntity.name, schema: UserSchema }]),
   ],
   providers: [UserResolver, UserService, UserRepository],
   exports: [UserService],

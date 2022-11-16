@@ -10,10 +10,10 @@ export class UserDocument extends AbstractDocument {
   password: string;
 
   @Prop()
-  firstName: string;
+  firstName?: string;
 
   @Prop()
-  lastName: string;
+  lastName?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);

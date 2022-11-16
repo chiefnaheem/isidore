@@ -5,4 +5,7 @@ import { AbstractEntity } from '../../database/schema/database.entity';
 export class UserEntity extends AbstractEntity {
   @Field()
   readonly email: string;
+
+  @Field()
+  readonly access_token?: string
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Response } from 'express';
-// import { UserEntity } from '../../user/schema/user.entity';
+import { LoginDto } from 'src/user/dto/user.dto';
+import { UserService } from 'src/user/service/user.service';
 
 export interface TokenPayload {
   userId: string;
@@ -13,6 +13,7 @@ export class AuthService {
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
+    private readonly userService: UserService
   ) {}
 
   // async login(user: UserEntity, response: Response) {
@@ -32,7 +33,7 @@ export class AuthService {
   //     expires,
   //   });
   // }
-  async accessToken(
+  private async accessToken(
     userId: string,
     email: string,
   ): Promise<{ access_token: string }> {
@@ -47,10 +48,9 @@ export class AuthService {
     return { access_token: token };
   }
 
-  logout(response: Response) {
-    response.cookie('Authentication', '', {
-      httpOnly: true,
-      expires: new Date(),
-    });
+  async login(body: LoginDto) {
+    const user = await this.userService.validateUser(body.email, body.password);
+    return this.accessToken(user._id, user.email);
   }
+  
 }
