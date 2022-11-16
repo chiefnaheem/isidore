@@ -3,21 +3,21 @@ import { PartialType } from '@nestjs/mapped-types';
 import { Types } from 'mongoose';
 
 export class CreateCustomerDto {
-    @IsString()
-    @IsNotEmpty()
-    firstName: string;
+  @IsString()
+  @IsNotEmpty()
+  firstName: string;
 
-    @IsString()
-    @IsOptional()
-    lastName?: string;
+  @IsString()
+  @IsOptional()
+  lastName?: string;
 
-    @IsString()
-    @IsOptional()
-    address?: string;
+  @IsString()
+  @IsOptional()
+  address?: string;
 
-    @IsString()
-    @IsOptional()
-    businesses?: Types.ObjectId[];
+  @IsString()
+  @IsOptional()
+  businesses?: Types.ObjectId[];
 }
 
 export class UpdateCustomerDto extends PartialType(CreateCustomerDto) {}
