@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { Types } from 'mongoose';
 import { LoginDto } from 'src/user/dto/user.dto';
 import { UserService } from 'src/user/service/user.service';
 
@@ -34,7 +35,7 @@ export class AuthService {
   //   });
   // }
   private async accessToken(
-    userId: string,
+    userId: Types.ObjectId,
     email: string,
   ): Promise<{ access_token: string }> {
     const secret = this.configService.get('JWT_SECRET');

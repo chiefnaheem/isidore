@@ -9,37 +9,53 @@ import { GetCurrentUser } from '../dto/getUser.dto';
 import { LoginDto, RegisterDto } from '../dto/user.dto';
 import { UserEntity } from '../schema/user.entity';
 import { UserDocument } from '../schema/user.schema';
-import { UserRepository } from '../repository/user.repository';
 import { AuthService } from 'src/auth/service/auth.service';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UserService {
   constructor(
-    private readonly usersRepository: UserRepository,
+    // private readonly usersRepository: UserRepository,
     //  private readonly configService: ConfigService,
+     @InjectModel(UserEntity.name)
+    private userModel: Model<UserDocument>,
    
   ) {}
-
+    //create user
   async createUser(body: RegisterDto) {
-    await this.validateCreateUserData(body);
-    const userDocument = await this.usersRepository.create({
-      ...body,
-      password: await bcrypt.hash(body.password, 10),
-    });
-    return this.toModel(userDocument);
+    // await this.validateCreateUserData(body);
+    const emailExists = await this.userModel.findOne({ email: body.email });
+      if(emailExists) {
+
+        throw new ConflictException('Email already exists. lldjdj');
+      }
+    const user = new this.userModel(body);
+    await user.save();
+    return user;
+
+    // const userDocument = await this.usersRepository.create({
+    //   ...body,
+    //   password: await bcrypt.hash(body.password, 10),
+    // });
+    // return this.toModel(userDocument);
   }
 
-  private async validateCreateUserData(body: RegisterDto) {
-    try {
-      await this.usersRepository.findOne({ email: body.email });
-      throw new ConflictException('Email already exists.');
-    } catch (err) {
-      throw new InternalServerErrorException(err.message);
-    }
-  }
+  // private async validateCreateUserData(body: RegisterDto) {
+  //   try {
+  //     const emailExists = await this.userModel.findOne({ email: body.email });
+  //     if(emailExists) {
+
+  //       throw new ConflictException('Email already exists. lldjdj');
+  //     }
+
+  //   } catch (err) {
+  //     throw new InternalServerErrorException(err.message);
+  //   }
+  // }
 
   // private async accessToken(
   //   userId: string,
@@ -64,12 +80,12 @@ export class UserService {
   // }
 
   async getUser(currentUser: GetCurrentUser) {
-    const userDocument = await this.usersRepository.findOne(currentUser);
-    return this.toModel(userDocument);
+    const userDocument = await this.userModel.findOne(currentUser);
+    return userDocument
   }
 
   async validateUser(email: string, password: string) {
-    const userDocument = await this.usersRepository.findOne({ email });
+    const userDocument = await this.userModel.findOne({ email });
     const passwordIsValid = await bcrypt.compare(
       password,
       userDocument.password,
@@ -77,13 +93,13 @@ export class UserService {
     if (!passwordIsValid) {
       throw new UnauthorizedException('Credentials are not valid.');
     }
-    return this.toModel(userDocument);
+    return userDocument;
   }
 
-  private toModel(userDocument: UserDocument): UserEntity {
-    return {
-      _id: userDocument._id.toHexString(),
-      email: userDocument.email,
-    };
-  }
+  // private toModel(userDocument: UserDocument): UserEntity {
+  //   return {
+  //     _id: userDocument?._id.toHexString(),
+  //     email: userDocument.email,
+  //   };
+  // }
 }
