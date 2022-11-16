@@ -1,23 +1,44 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
-import { Types } from 'mongoose';
+import { IsString, IsNotEmpty, IsOptional, IsArray } from 'class-validator';
+import { Field, InputType } from '@nestjs/graphql';
 
+@InputType()
 export class CreateCustomerDto {
   @IsString()
   @IsNotEmpty()
+  @Field()
   firstName: string;
 
   @IsString()
   @IsOptional()
+  @Field()
   lastName?: string;
 
   @IsString()
   @IsOptional()
+  @Field()
   address?: string;
 
   @IsString()
   @IsOptional()
-  businesses?: Types.ObjectId[];
+  @Field()
+  businesses: string;
 }
 
-export class UpdateCustomerDto extends PartialType(CreateCustomerDto) {}
+
+@InputType()
+export class UpdateCustomerDto {
+  @IsString()
+  @IsOptional()
+  @Field()
+  firstName?: string;
+
+  @IsString()
+  @IsOptional()
+  @Field()
+  lastName?: string;
+
+  @IsString()
+  @IsOptional()
+  @Field()
+  address?: string;
+}

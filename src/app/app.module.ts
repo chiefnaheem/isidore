@@ -9,6 +9,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AuthModule } from 'src/auth/auth.module';
 import { UserModule } from 'src/user/user.module';
 import { BusinessModule } from 'src/business/business.module';
+import { CustomerModule } from 'src/customer/customer.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { BusinessModule } from 'src/business/business.module';
     BusinessModule,
     UserModule,
     AuthModule,
+    CustomerModule,
     ConfigModule.forRoot({
       isGlobal: true,
       cache: false,

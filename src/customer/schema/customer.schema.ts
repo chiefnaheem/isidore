@@ -18,10 +18,10 @@ export class CustomerEntity {
   @Field(() => String)
   address: string;
 
-  @Prop([{ type: Types.ObjectId, ref: BusinessEntity.name }])
-  @Field(() => [Types.ObjectId])
-  businesses: Types.ObjectId[];
+  @Prop([{ type: String, ref: BusinessEntity.name }])
+  @Field(() => [String])
+  businesses: string[];
 }
 
 export const CustomerSchema = SchemaFactory.createForClass(CustomerEntity);
-export type DepartmentDocument = CustomerEntity & Document;
+export type CustomerDocument = CustomerEntity & Document;
