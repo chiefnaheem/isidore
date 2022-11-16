@@ -24,9 +24,7 @@ export class BusinessService {
   async createBusiness(body: CreateBusinessDto) {
     //we want to create business in which the owner will be the logged in user
     try {
-      const business = new this.userModel({
-        ...body,
-      });
+      const business = new this.userModel(body);
       await business.save();
       return business;
     } catch (error) {

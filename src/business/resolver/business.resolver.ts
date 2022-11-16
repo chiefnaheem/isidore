@@ -13,43 +13,36 @@ import { BusinessService } from '../service/business.service';
 export class BusinessResolver {
   constructor(private readonly businessService: BusinessService) {}
 
-//   @UseGuards(GqlAuthGuard)
+  //   @UseGuards(GqlAuthGuard)
   @Mutation(() => BusinessEntity)
-  async createBusiness(
-    @Args('createBusiness') body: CreateBusinessDto,
-   
-  ) {
+  async createBusiness(@Args('createBusiness') body: CreateBusinessDto) {
     return this.businessService.createBusiness(body);
   }
 
-   //get all businesses
+  //get all businesses
+  @Query(() => BusinessEntity, { name: 'businesses' })
+    async getBusinesses() {
+    return this.businessService.getBusinesses();
+    }
 
+  // @UseGuards(GqlAuthGuard)
+  @Query(() => BusinessEntity, { name: 'business' })
+  async getBusiness(@Args('id') id: string) {
+    return this.businessService.getBusiness(id);
+  }
 
-    // @UseGuards(GqlAuthGuard)
-    @Query(() => BusinessEntity, { name: 'business' })
-    async getBusiness(
-        @Args('id') id: string,
+  // @UseGuards(GqlAuthGuard)
+  @Mutation(() => BusinessEntity)
+  async updateBusiness(
+    @Args('id') id: string,
+    @Args('updateBusiness') body: UpdateBusinessDto,
+  ) {
+    return this.businessService.updateBusiness(id, body);
+  }
 
-    ) {
-        return this.businessService.getBusiness(id);
-        }
-
-    // @UseGuards(GqlAuthGuard)
-    @Mutation(() => BusinessEntity)
-    async updateBusiness(
-        @Args('id') id: string,
-        @Args('updateBusiness') body: UpdateBusinessDto,
-       
-    ) {
-        return this.businessService.updateBusiness(id, body);
-        }
-
-    // @UseGuards(GqlAuthGuard)
-    @Mutation(() => BusinessEntity)
-    async deleteBusiness(
-        @Args('id') id: string,
-
-    ) {
-        return this.businessService.deleteBusiness(id);
-        }
+  // @UseGuards(GqlAuthGuard)
+  @Mutation(() => BusinessEntity)
+  async deleteBusiness(@Args('id') id: string) {
+    return this.businessService.deleteBusiness(id);
+  }
 }

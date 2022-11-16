@@ -31,7 +31,7 @@ export class UpdateBusinessDto {
   @IsString()
   @IsOptional()
   @Field()
-  name: string;
+  name?: string;
 
   @IsString()
   @IsOptional()
