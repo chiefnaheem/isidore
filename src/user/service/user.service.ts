@@ -2,17 +2,13 @@ import {
   Injectable,
   UnauthorizedException,
   ConflictException,
-  InternalServerErrorException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { GetCurrentUser } from '../dto/getUser.dto';
-import { LoginDto, RegisterDto } from '../dto/user.dto';
+import { RegisterDto } from '../dto/user.dto';
 import { UserEntity } from '../schema/user.entity';
 import { UserDocument } from '../schema/user.schema';
-import { AuthService } from 'src/auth/service/auth.service';
-import { Response } from 'express';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -43,12 +39,7 @@ export class UserService {
     return user;
 
     
-  }
-
-
-
-
-
+    }
   async getUser(currentUser: GetCurrentUser) {
     const userDocument = await this.userModel.findOne(currentUser);
     return userDocument
