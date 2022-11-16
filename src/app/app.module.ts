@@ -8,10 +8,12 @@ import { DatabaseModule } from 'src/database/database.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AuthModule } from 'src/auth/auth.module';
 import { UserModule } from 'src/user/user.module';
+import { BusinessModule } from 'src/business/business.module';
 
 @Module({
   imports: [
     DatabaseModule,
+    BusinessModule,
     UserModule,
     AuthModule,
     ConfigModule.forRoot({

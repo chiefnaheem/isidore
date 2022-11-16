@@ -62,7 +62,7 @@ export class BusinessService {
 
   //we want to update a business in which the owner will be the logged in user
   async updateBusiness(
-    id: Types.ObjectId,
+    id: string,
     body: UpdateBusinessDto,
     currentUser: GetCurrentUser,
   ) {
@@ -83,7 +83,7 @@ export class BusinessService {
   }
 
   //we want to delete a business in which the owner will be the logged in user
-  async deleteBusiness(id: Types.ObjectId, currentUser: GetCurrentUser) {
+  async deleteBusiness(id: string, currentUser: GetCurrentUser) {
     try {
       const businessDocument = await this.userModel.findOne({
         _id: id,

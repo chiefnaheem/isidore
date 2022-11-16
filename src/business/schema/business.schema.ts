@@ -19,9 +19,9 @@ export class BusinessEntity {
   @Field(() => String)
   address: string;
 
-  @Prop({ type: Types.ObjectId, ref: UserEntity.name })
-    @Field(() => Types.ObjectId)
-  owner: Types.ObjectId;
+  @Prop({ type: String, ref: UserEntity.name })
+    @Field(() => String)
+  owner: string;
 }
 
 export const BusinessSchema = SchemaFactory.createForClass(BusinessEntity);

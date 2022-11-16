@@ -1,7 +1,9 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Types } from 'mongoose';
 import { GqlAuthGuard } from 'src/auth/guards/gql.auth.guard';
 import { GetCurrentUser } from 'src/user/dto/getUser.dto';
+import { UpdateBusinessDto, CreateBusinessDto } from '../dto/business.dto';
 import { BusinessEntity } from '../schema/business.schema';
 import { BusinessService } from '../service/business.service';
 
